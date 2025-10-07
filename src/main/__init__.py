@@ -13,7 +13,7 @@ class Facing(Enum):  # Facing 我们定义为一个枚举类，用于定义方�
     DOWN = 3
 
 
-class Grid():
+class Grid:
     def __init__(self, width: int, height: int, enemy_pos: tuple):  # DO NOT EDIT THIS METHOD
         self.width: int = width
         self.height: int = height
@@ -48,17 +48,9 @@ class Grid():
         x = int(value[0])
         y = int(value[1])
 
-        # Clamp x to [0, width]
-        if x < 0:
-            x = 0
-        elif x > self.width:
-            x = self.width
-
-        # Clamp y to [0, height]
-        if y < 0:
-            y = 0
-        elif y > self.height:
-            y = self.height
+        # Clamp x and y to valid range [0, width/height]
+        x = max(0, min(x, self.width))
+        y = max(0, min(y, self.height))
 
         self._current_pos = (x, y)
 
@@ -70,17 +62,17 @@ class Grid():
         以右为X轴正方向，上为Y轴正方向
         '''
         x, y = self.current_pos
-
-        if self.current_direction == Facing.UP:
-            y += 1
-        elif self.current_direction == Facing.DOWN:
-            y -= 1
-        elif self.current_direction == Facing.RIGHT:
-            x += 1
-        elif self.current_direction == Facing.LEFT:
-            x -= 1
-
-        self.current_pos = (x, y)
+        
+        # 使用字典映射优化方向判断
+        direction_map = {
+            Facing.UP: (0, 1),
+            Facing.DOWN: (0, -1),
+            Facing.RIGHT: (1, 0),
+            Facing.LEFT: (-1, 0)
+        }
+        
+        dx, dy = direction_map[self.current_direction]
+        self.current_pos = (x + dx, y + dy)
         return self.current_pos
 
     def turn_left(self) -> Facing:  # type: ignore
