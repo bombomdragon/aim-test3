@@ -14,7 +14,8 @@ class Facing(Enum):  # Facing 我们定义为一个枚举类，用于定义方�
 
 
 class Grid:
-    def __init__(self, width: int, height: int, enemy_pos: tuple):  # DO NOT EDIT THIS METHOD
+    # DO NOT EDIT THIS METHOD
+    def __init__(self, width: int, height: int, enemy_pos: tuple):
         self.width: int = width
         self.height: int = height
         self._current_pos: tuple = (0, 0)
@@ -62,7 +63,7 @@ class Grid:
         以右为X轴正方向，上为Y轴正方向
         '''
         x, y = self.current_pos
-        
+
         # 使用字典映射优化方向判断
         direction_map = {
             Facing.UP: (0, 1),
@@ -70,7 +71,7 @@ class Grid:
             Facing.RIGHT: (1, 0),
             Facing.LEFT: (-1, 0)
         }
-        
+
         dx, dy = direction_map[self.current_direction]
         self.current_pos = (x + dx, y + dy)
         return self.current_pos
