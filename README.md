@@ -1,4 +1,4 @@
-# AIM Python 2526 Courseworks
+# AIM Python 2526 Coursewo
 
 UNNC-AIM 国庆 Python 考核作业
 
